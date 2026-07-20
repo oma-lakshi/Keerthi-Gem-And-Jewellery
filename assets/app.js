@@ -15,7 +15,7 @@ const CONFIG = {
   tagline: "Fine gems & handcrafted jewellery",
   address: "217/1, Main Street, Moratuwa.",       // TODO: replace
   shopPhone: "+94 112646575",                         // TODO: replace with real shop number
-  shopWhatsApp: "94773156496",                          // TODO: replace, digits only, no + or spaces
+  shopWhatsApp: "94 773156496",                          // TODO: replace, digits only, no + or spaces
   shopEmail: "keerthigemjewellery000@gmail.com",                      // TODO: replace
 
   social: {
@@ -23,6 +23,7 @@ const CONFIG = {
     instagram: "https://www.instagram.com/keerthi_gem.jwlry?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     google: "https://share.google/73iCWbLMpqwFta5OY"
   },
+  mapsUrl: "https://maps.app.goo.gl/6jgUNqXvmKRtW9gc6",
 
   // Extra client-side friction on top of Supabase's own login protection —
   // the real access control lives in the database (is_admin() in
@@ -51,7 +52,9 @@ const STATE = {
   },
   closedDates: [],
   products: [],
-  appointments: []
+  appointments: [],
+  about: { heading: "Our Story", body: "", establishedYear: null },
+  aboutPhotos: []
 };
 
 let session = {
@@ -87,13 +90,23 @@ async function loadProducts(){
   if (error){ console.error("Couldn't load products:", error.message); return; }
   STATE.products = data.map(p => ({ id: p.id, name: p.name, category: p.category, price: p.price, img: p.image_url, desc: p.description }));
 }
+async function loadAboutContent(){
+  const { data, error } = await sb.from("about_content").select("*").eq("id", 1).maybeSingle();
+  if (error){ console.error("Couldn't load about content:", error.message); return; }
+  if (data) STATE.about = { heading: data.heading, body: data.body, establishedYear: data.established_year };
+}
+async function loadAboutPhotos(){
+  const { data, error } = await sb.from("about_photos").select("*").order("sort_order", { ascending: true });
+  if (error){ console.error("Couldn't load about photos:", error.message); return; }
+  STATE.aboutPhotos = data.map(p => ({ id: p.id, img: p.image_url, caption: p.caption, sort_order: p.sort_order }));
+}
 async function loadAppointments(){
   const { data, error } = await sb.from("appointments").select("*").order("created_at", { ascending: false });
   if (error){ console.error("Couldn't load appointments (are you logged in as admin?):", error.message); return; }
   STATE.appointments = data;
 }
 async function loadPublicData(){
-  await Promise.all([loadBanners(), loadWeeklyHours(), loadClosedDates(), loadProducts()]);
+  await Promise.all([loadBanners(), loadWeeklyHours(), loadClosedDates(), loadProducts(), loadAboutContent(), loadAboutPhotos()]);
 }
 
 /* ================= INIT ================= */
@@ -104,12 +117,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   renderHero();
   renderHours();
+  renderAbout();
   renderProducts("All");
   initReveal();
   initNavScroll();
   initFilters();
   initFab();
   initSocial();
+  initMaps();
   initAppointmentForm();
   initLogin();
   initAdmin();
@@ -201,6 +216,32 @@ function renderHours(){
 function formatDate(iso){
   const dt = new Date(iso + "T00:00:00");
   return dt.toLocaleDateString(undefined, { day:"numeric", month:"short", year:"numeric" });
+}
+
+/* ================= ABOUT ================= */
+function renderAbout(){
+  const yearBadge = STATE.about.establishedYear ? `Est. ${STATE.about.establishedYear} · Sri Lanka` : "Est. Sri Lanka";
+  document.getElementById("heroEstLabel").textContent = yearBadge;
+  document.getElementById("aboutEstLabel").textContent = STATE.about.establishedYear ? `Since ${STATE.about.establishedYear}` : "Our Story";
+  document.getElementById("aboutHeading").textContent = STATE.about.heading || "Our Story";
+  document.getElementById("aboutBody").textContent = STATE.about.body || "";
+
+  const gallery = document.getElementById("aboutGallery");
+  gallery.innerHTML = "";
+  STATE.aboutPhotos.forEach((p, i) => {
+    const item = document.createElement("div");
+    item.className = "about-gallery-item reveal";
+    item.style.setProperty("--stagger", i % 4);
+    item.innerHTML = `<img src="${p.img}" alt="${p.caption || "About us"}" loading="lazy">${p.caption ? `<div class="caption">${p.caption}</div>` : ""}`;
+    gallery.appendChild(item);
+  });
+  initReveal();
+}
+
+/* ================= MAPS / DIRECTIONS ================= */
+function initMaps(){
+  document.getElementById("aboutDirectionsBtn").href = CONFIG.mapsUrl;
+  document.getElementById("footerDirectionsLink").href = CONFIG.mapsUrl;
 }
 
 /* ================= PRODUCTS / COLLECTION ================= */
@@ -515,6 +556,7 @@ async function openAdmin(){
   document.body.style.overflow = "hidden";
   renderAdminBanners();
   renderAdminHours();
+  renderAdminAbout();
   renderAdminProducts();
   await loadAppointments();
   renderAdminAppointments();
@@ -584,6 +626,35 @@ function initAdmin(){
     await loadClosedDates();
     renderAdminHours();
     renderHours();
+  });
+
+  /* ---- About ---- */
+  document.getElementById("aboutForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const payload = {
+      id: 1,
+      heading: document.getElementById("aboutHeadingInput").value.trim() || "Our Story",
+      body: document.getElementById("aboutBodyInput").value.trim(),
+      established_year: document.getElementById("aboutYearInput").value ? Number(document.getElementById("aboutYearInput").value) : null
+    };
+    const { error } = await sb.from("about_content").upsert(payload, { onConflict: "id" });
+    if (error){ alert("Couldn't save about section: " + error.message); return; }
+    await loadAboutContent();
+    renderAbout();
+    flashSaved("aboutSaveBtn");
+  });
+
+  document.getElementById("aboutPhotoForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const img = document.getElementById("aboutPhotoImg").value.trim();
+    const caption = document.getElementById("aboutPhotoCaption").value.trim();
+    if (!img) return;
+    const { error } = await sb.from("about_photos").insert({ image_url: img, caption: caption || null, sort_order: STATE.aboutPhotos.length });
+    if (error){ alert("Couldn't save photo: " + error.message); return; }
+    e.target.reset();
+    await loadAboutPhotos();
+    renderAdminAbout();
+    renderAbout();
   });
 
   /* ---- Products ---- */
@@ -678,6 +749,31 @@ function renderAdminHours(){
       await loadClosedDates();
       renderAdminHours();
       renderHours();
+    });
+    list.appendChild(row);
+  });
+}
+
+function renderAdminAbout(){
+  document.getElementById("aboutHeadingInput").value = STATE.about.heading || "";
+  document.getElementById("aboutYearInput").value = STATE.about.establishedYear || "";
+  document.getElementById("aboutBodyInput").value = STATE.about.body || "";
+
+  const list = document.getElementById("aboutPhotoList");
+  list.innerHTML = "";
+  STATE.aboutPhotos.forEach((p) => {
+    const row = document.createElement("div");
+    row.className = "admin-list-item";
+    row.innerHTML = `
+      <img src="${p.img}" alt="">
+      <div class="meta"><strong>${p.caption || "No caption"}</strong></div>
+      <button class="icon-btn" title="Remove">${trashIcon()}</button>`;
+    row.querySelector("button").addEventListener("click", async () => {
+      const { error } = await sb.from("about_photos").delete().eq("id", p.id);
+      if (error){ alert("Couldn't delete photo: " + error.message); return; }
+      await loadAboutPhotos();
+      renderAdminAbout();
+      renderAbout();
     });
     list.appendChild(row);
   });
