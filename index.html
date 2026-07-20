@@ -27,6 +27,7 @@
   <nav>
     <ul class="nav-links" id="navLinks">
       <li><a href="#hours">Open Days</a></li>
+      <li><a href="#about">About</a></li>
       <li><a href="#collection">Collection</a></li>
       <li><a href="#appointment">Appointment</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -40,7 +41,7 @@
 <section id="hero">
   <div id="heroSlides"></div>
   <div class="hero-content">
-    <span class="label">Est. Sri Lanka</span>
+    <span class="label" id="heroEstLabel">Est. Sri Lanka</span>
     <h1>Gems worth <em>generations</em></h1>
     <p>Handpicked gemstones and handcrafted gold jewellery, made to be kept and passed on.</p>
     <div class="hero-actions">
@@ -70,6 +71,21 @@
       <h4>Upcoming closures</h4>
       <div class="chip-row" id="specialClosedChips"></div>
     </div>
+  </div>
+</section>
+
+<div class="hallmark"><span class="hallmark-stamp"><img src="assets/logo.png" alt=""></span></div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label" id="aboutEstLabel">Our Story</span>
+      <h2 id="aboutHeading">Our Story</h2>
+      <p id="aboutBody"></p>
+      <a href="#" id="aboutDirectionsBtn" class="btn btn-ghost" target="_blank" rel="noopener" style="margin-top:16px;">Get Directions</a>
+    </div>
+    <div class="about-gallery" id="aboutGallery"></div>
   </div>
 </section>
 
@@ -189,6 +205,7 @@
       <a href="https://wa.me/94112345678" target="_blank" rel="noopener">WhatsApp us</a>
       <a href="#hours">Open days</a>
       <a href="#appointment">Book an appointment</a>
+      <a href="#" id="footerDirectionsLink" target="_blank" rel="noopener">Get directions</a>
     </div>
     <a href="#" class="staff-link" data-open-login>Staff login</a>
 
@@ -256,6 +273,7 @@
     <div class="admin-tabs">
       <button class="admin-tab active" data-tab="banners">Banners</button>
       <button class="admin-tab" data-tab="hours">Open Days</button>
+      <button class="admin-tab" data-tab="about">About</button>
       <button class="admin-tab" data-tab="products">Products</button>
       <button class="admin-tab" data-tab="appointments">Appointments</button>
     </div>
@@ -306,6 +324,31 @@
       </div>
     </div>
 
+    <!-- About -->
+    <div class="admin-pane" id="pane-about">
+      <div class="admin-card">
+        <h3>About section text</h3>
+        <form id="aboutForm">
+          <div class="form-row"><label for="aboutHeadingInput">Heading</label><input type="text" id="aboutHeadingInput" placeholder="Our Story" required></div>
+          <div class="form-row"><label for="aboutYearInput">Established year</label><input type="number" id="aboutYearInput" placeholder="1990" min="1800" max="2100"></div>
+          <div class="form-row"><label for="aboutBodyInput">Story</label><textarea id="aboutBodyInput" rows="5" placeholder="Tell customers about your shop's history..."></textarea></div>
+          <button type="submit" class="btn btn-solid" id="aboutSaveBtn">Save about section</button>
+        </form>
+      </div>
+      <div class="admin-card">
+        <h3>Add a photo</h3>
+        <form id="aboutPhotoForm">
+          <div class="form-row"><label for="aboutPhotoImg">Image URL</label><input type="url" id="aboutPhotoImg" placeholder="https://..." required></div>
+          <div class="form-row"><label for="aboutPhotoCaption">Caption (optional)</label><input type="text" id="aboutPhotoCaption" placeholder="e.g. Our showroom"></div>
+          <button type="submit" class="btn btn-solid">Add photo</button>
+        </form>
+      </div>
+      <div class="admin-card">
+        <h3>Current photos</h3>
+        <div id="aboutPhotoList"></div>
+      </div>
+    </div>
+
     <!-- Products -->
     <div class="admin-pane" id="pane-products">
       <div class="admin-card">
@@ -344,3 +387,4 @@
 <script src="assets/app.js"></script>
 </body>
 </html>
+
