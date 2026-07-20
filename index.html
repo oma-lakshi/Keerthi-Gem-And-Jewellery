@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keerthi Gem & Jewellery</title>
+<meta name="description" content="Fine gems and handcrafted jewellery. View our collection, opening days, and book an appointment.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Jost:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-badge"><img src="assets/logo.png" alt="Keerthi Gem & Jewellery"></div>
+  <div class="pre-text">Keerthi Gem & Jewellery</div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="siteNav">
+  <a href="#hero" class="nav-brand">
+    <img src="assets/logo.png" alt="logo">
+    <span class="nav-brand-text">Keerthi Gem<small>& Jewellery</small></span>
+  </a>
+  <nav>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hours">Open Days</a></li>
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#appointment">Appointment</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <a href="#appointment" class="nav-cta">Book a visit</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div id="heroSlides"></div>
+  <div class="hero-content">
+    <span class="label">Est. Sri Lanka</span>
+    <h1>Gems worth <em>generations</em></h1>
+    <p>Handpicked gemstones and handcrafted gold jewellery, made to be kept and passed on.</p>
+    <div class="hero-actions">
+      <a href="#hours" class="btn btn-solid">Open Days</a>
+      <a href="#collection" class="btn">View Collection</a>
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+  <a href="#hours" class="scroll-cue">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v16m0 0-6-6m6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</section>
+
+<div class="hallmark"><span class="hallmark-stamp"><img src="assets/logo.png" alt=""></span></div>
+
+<!-- OPEN DAYS -->
+<section class="section" id="hours">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">Visit us</span>
+      <h2>Our Open Days</h2>
+      <p>Here's when our doors are open this week.</p>
+    </div>
+    <div class="hours-grid" id="hoursGrid"></div>
+    <div class="special-closed" id="specialClosedBlock">
+      <h4>Upcoming closures</h4>
+      <div class="chip-row" id="specialClosedChips"></div>
+    </div>
+  </div>
+</section>
+
+<div class="hallmark"><span class="hallmark-stamp"><img src="assets/logo.png" alt=""></span></div>
+
+<!-- COLLECTION -->
+<section class="section" id="collection">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">The Collection</span>
+      <h2>Pieces from our showroom</h2>
+      <p>A small selection — visit us to see the full collection in person.</p>
+    </div>
+    <div class="filter-row reveal">
+      <button class="filter-chip active" data-cat="All">All</button>
+      <button class="filter-chip" data-cat="Necklaces">Necklaces</button>
+      <button class="filter-chip" data-cat="Rings">Rings</button>
+      <button class="filter-chip" data-cat="Earrings">Earrings</button>
+      <button class="filter-chip" data-cat="Bracelets">Bracelets</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</section>
+
+<div class="hallmark"><span class="hallmark-stamp"><img src="assets/logo.png" alt=""></span></div>
+
+<!-- APPOINTMENT -->
+<section class="section" id="appointment">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">Book a visit</span>
+      <h2>Get an appointment</h2>
+      <p>Tell us a little about what you're looking for and we'll confirm a time with you.</p>
+    </div>
+    <div class="appt-wrap reveal">
+      <form id="apptForm">
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="apptName">Full name</label>
+            <input type="text" id="apptName" required placeholder="Your name">
+          </div>
+          <div class="form-row">
+            <label for="apptPhone">Phone number</label>
+            <input type="tel" id="apptPhone" required placeholder="07X XXX XXXX">
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="apptPurpose">Purpose of visit</label>
+          <select id="apptPurpose" required>
+            <option value="">Select a reason</option>
+            <option>Buying a piece</option>
+            <option>Custom / made-to-order design</option>
+            <option>Valuation or appraisal</option>
+            <option>Repair or resizing</option>
+            <option>Selling gold or gems</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="apptDate">Preferred date</label>
+          <input type="date" id="apptDate" required>
+          <div class="field-error" id="apptDateError"></div>
+          <div class="field-hint">Dates we're closed will be flagged automatically.</div>
+        </div>
+        <div class="form-row">
+          <label for="apptNotes">Anything else we should know?</label>
+          <textarea id="apptNotes" rows="3" placeholder="E.g. budget range, a photo reference, sizing details..."></textarea>
+        </div>
+
+        <!-- Honeypot: invisible to real visitors, bots often fill every field -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="apptWebsite">Leave this field blank</label>
+          <input type="text" id="apptWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <label for="apptCaptcha">Quick check — <span id="apptCaptchaQ"></span></label>
+          <input type="text" id="apptCaptcha" required inputmode="numeric" autocomplete="off" placeholder="Type the answer">
+          <div class="field-error" id="apptCaptchaError">That's not quite right — please try again.</div>
+        </div>
+
+        <button type="submit" class="btn btn-solid btn-block" id="apptSubmitBtn">
+          <span class="btn-label">Request appointment</span>
+          <span class="btn-spinner"><span class="spinner-ring"></span></span>
+          <span class="btn-check">✓ Sent — check WhatsApp</span>
+        </button>
+      </form>
+      <div class="appt-success" id="apptSuccess">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald-light)"><path d="M4 12l5 5L20 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Request sent</h3>
+        <p>We've opened WhatsApp with your details pre-filled — just hit send and we'll confirm your appointment shortly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-brand"><img src="assets/logo.png" alt="logo"><h3>Keerthi Gem & Jewellery</h3></div>
+    <p>Visit our showroom or reach us directly — we're happy to help.</p>
+
+    <div class="social-row" id="socialRow">
+      <a href="#" id="socialFacebook" class="social-btn" target="_blank" rel="noopener" aria-label="Follow us on Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.4-3H13.5V8.5c0-.87.24-1.46 1.5-1.46h1.6V4.34C16.3 4.24 15.24 4 14 4c-2.5 0-4.2 1.53-4.2 4.34V10.5H7.3v3H9.8V21h3.7Z"/></svg>
+      </a>
+      <a href="#" id="socialInstagram" class="social-btn" target="_blank" rel="noopener" aria-label="Follow us on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="#" id="socialGoogle" class="social-btn" target="_blank" rel="noopener" aria-label="Find us on Google">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-links">
+      <a href="tel:+94112345678">Call the shop</a>
+      <a href="https://wa.me/94112345678" target="_blank" rel="noopener">WhatsApp us</a>
+      <a href="#hours">Open days</a>
+      <a href="#appointment">Book an appointment</a>
+    </div>
+    <a href="#" class="staff-link" data-open-login>Staff login</a>
+
+    <div class="credit">
+      <div>Web engineered and developed by <strong>Omesh Lakshitha</strong>.</div>
+      <div class="credit-links">
+        <a href="tel:+94774750576">+94 77 475 0576</a>
+        <a href="https://www.instagram.com/oma_lakshi/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://wa.me/94774750576" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <p class="credit-msg">To have a website like this one designed and built for your own business, kindly get in touch via WhatsApp above — inquiries are welcome.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING ACTION BUTTONS -->
+<div class="fab-cluster" id="fabCluster">
+  <div class="fab-item"><span class="fab-tag">Book appointment</span><button class="fab-btn" id="fabAppt" aria-label="Get an appointment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v4M16 2v4M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+  <div class="fab-item"><span class="fab-tag">Message us</span><a class="fab-btn" id="fabWhatsapp" target="_blank" rel="noopener" aria-label="Message us on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.7.9-.2.2-.4.1a6.7 6.7 0 0 1-2-1.2 7.4 7.4 0 0 1-1.4-1.7c-.1-.2 0-.3.1-.4l.3-.4.2-.3a.5.5 0 0 0 0-.4c-.1-.1-.5-1.3-.7-1.7s-.4-.4-.5-.4h-.5a.9.9 0 0 0-.6.3 2.7 2.7 0 0 0-.9 2 4.7 4.7 0 0 0 1 2.5 10.8 10.8 0 0 0 4.1 3.6c.6.2 1 .4 1.4.5a3.3 3.3 0 0 0 1.5.1 2.5 2.5 0 0 0 1.6-1.1 1.9 1.9 0 0 0 .1-1.1c-.1-.1-.2-.2-.4-.3Z"/></svg></a></div>
+  <div class="fab-item"><span class="fab-tag">Call us</span><a class="fab-btn" id="fabCall" aria-label="Call us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 3a2 2 0 0 1-.4 2.1L8 10.3a16 16 0 0 0 6 6l1.5-1.4a2 2 0 0 1 2.1-.4c1 .4 2 .6 3 .7a2 2 0 0 1 1.7 2Z" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+  <button class="fab-btn fab-main" id="fabMain" aria-label="Contact options"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></button>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-backdrop" id="loginBackdrop">
+  <div class="modal" id="loginModal" style="position:relative;">
+    <button class="modal-close" id="loginClose" aria-label="Close">×</button>
+    <h3>Host Login</h3>
+    <span class="label">Staff access only</span>
+    <form id="loginForm">
+      <div class="form-row">
+        <label for="loginUser">Email</label>
+        <input type="email" id="loginUser" autocomplete="username" placeholder="you@example.com" required>
+      </div>
+      <div class="form-row">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" autocomplete="current-password" required>
+      </div>
+
+      <!-- Honeypot: invisible to real visitors, bots often fill every field -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="loginWebsite">Leave this field blank</label>
+        <input type="text" id="loginWebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="form-row">
+        <label for="loginCaptcha">Quick check — <span id="loginCaptchaQ"></span></label>
+        <input type="text" id="loginCaptcha" required inputmode="numeric" autocomplete="off" placeholder="Type the answer">
+      </div>
+
+      <button type="submit" class="btn btn-solid btn-block" id="loginSubmitBtn">
+        <span class="btn-label">Log in</span>
+        <span class="btn-spinner"><span class="spinner-ring"></span></span>
+        <span class="btn-check">✓</span>
+      </button>
+      <div class="field-error" id="loginError" style="text-align:center; margin-top:14px;"></div>
+      <div class="lock-msg" id="loginLock"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div id="adminPanel">
+  <div class="admin-top">
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="banners">Banners</button>
+      <button class="admin-tab" data-tab="hours">Open Days</button>
+      <button class="admin-tab" data-tab="products">Products</button>
+      <button class="admin-tab" data-tab="appointments">Appointments</button>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-ghost" id="adminPreview" type="button">View site</button>
+      <button class="btn btn-emerald" id="adminLogout" type="button">Log out</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <div class="badge-warn">Changes here save straight to the database — visible to every visitor, right away.</div>
+
+    <!-- Banners -->
+    <div class="admin-pane active" id="pane-banners">
+      <div class="admin-card">
+        <h3>Add a homepage banner</h3>
+        <form id="bannerForm">
+          <div class="form-row"><label for="bannerImg">Image URL</label><input type="url" id="bannerImg" placeholder="https://..." required></div>
+          <div class="form-row"><label for="bannerCaption">Caption (optional)</label><input type="text" id="bannerCaption" placeholder="Short line about this banner"></div>
+          <button type="submit" class="btn btn-solid">Add banner</button>
+        </form>
+      </div>
+      <div class="admin-card">
+        <h3>Current banners</h3>
+        <div id="bannerList"></div>
+      </div>
+    </div>
+
+    <!-- Open Days -->
+    <div class="admin-pane" id="pane-hours">
+      <div class="admin-card">
+        <h3>Weekly hours</h3>
+        <div id="hoursEditor"></div>
+        <button class="btn btn-solid" id="saveHoursBtn" style="margin-top:18px;">Save weekly hours</button>
+      </div>
+      <div class="admin-card">
+        <h3>Mark a special closed date</h3>
+        <form id="closedDateForm">
+          <div class="form-grid">
+            <div class="form-row"><label for="closedDateInput">Date</label><input type="date" id="closedDateInput" required></div>
+            <div class="form-row"><label for="closedReasonInput">Reason (optional)</label><input type="text" id="closedReasonInput" placeholder="e.g. Poya Day"></div>
+          </div>
+          <button type="submit" class="btn btn-solid">Add closed date</button>
+        </form>
+      </div>
+      <div class="admin-card">
+        <h3>Upcoming closures</h3>
+        <div id="closedDatesList"></div>
+      </div>
+    </div>
+
+    <!-- Products -->
+    <div class="admin-pane" id="pane-products">
+      <div class="admin-card">
+        <h3 id="productFormTitle">Add a piece</h3>
+        <form id="productForm">
+          <div class="form-grid">
+            <div class="form-row"><label for="prodName">Name</label><input type="text" id="prodName" required></div>
+            <div class="form-row"><label for="prodCategory">Category</label><input type="text" id="prodCategory" placeholder="Necklaces / Rings / Earrings / Bracelets"></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row"><label for="prodPrice">Price</label><input type="text" id="prodPrice" placeholder="Rs. 00,000" required></div>
+            <div class="form-row"><label for="prodImg">Image URL</label><input type="url" id="prodImg" placeholder="https://..." required></div>
+          </div>
+          <div class="form-row"><label for="prodDesc">Short description</label><textarea id="prodDesc" rows="2"></textarea></div>
+          <button type="submit" class="btn btn-solid" id="productSubmitBtn">Add to collection</button>
+        </form>
+      </div>
+      <div class="admin-card">
+        <h3>Current pieces</h3>
+        <div id="productList"></div>
+      </div>
+    </div>
+
+    <!-- Appointments -->
+    <div class="admin-pane" id="pane-appointments">
+      <div class="admin-card">
+        <h3>Appointment requests</h3>
+        <div id="appointmentsList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/config.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
